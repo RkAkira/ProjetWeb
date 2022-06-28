@@ -1,5 +1,5 @@
 CREATE TABLE Commande(
-   NumCommande VARCHAR(50),
+   NumCommande INT AUTO_INCREMENT,
    dateCommande DATE,
    prixCommande DECIMAL(19,4),
    valide_ BOOLEAN,
@@ -7,7 +7,8 @@ CREATE TABLE Commande(
 );
 
 CREATE TABLE Produit(
-   Id_Produit VARCHAR(50),
+   Id_Produit INT AUTO_INCREMENT,
+   photo VARCHAR(500),
    nom VARCHAR(50),
    prix DECIMAL(19,4),
    nbRestant DOUBLE,
@@ -45,7 +46,6 @@ CREATE TABLE Systeme_paiement(
    Id_Systeme_paiement INT AUTO_INCREMENT,
    nom VARCHAR(50),
    numCarte VARCHAR(50),
-   cvc VARCHAR(50),
    nomTitulaireCarte VARCHAR(50),
    ID VARCHAR(50) NOT NULL,
    PRIMARY KEY(Id_Systeme_paiement),
@@ -55,15 +55,15 @@ CREATE TABLE Systeme_paiement(
 CREATE TABLE Rassemble(
    NumCommande VARCHAR(50),
    Id_Produit VARCHAR(50),
-   PRIMARY KEY(NumCommande, Id_Produit),
+   CONSTRAINT PK_rassemble PRIMARY KEY(NumCommande, Id_Produit),
    FOREIGN KEY(NumCommande) REFERENCES Commande(NumCommande),
    FOREIGN KEY(Id_Produit) REFERENCES Produit(Id_Produit)
 );
 
-CREATE TABLE realise(
+CREATE TABLE Realise(
    ID VARCHAR(50),
    NumCommande VARCHAR(50),
-   PRIMARY KEY(ID, NumCommande),
+   CONSTRAINT PK_realise PRIMARY KEY(ID, NumCommande),
    FOREIGN KEY(ID) REFERENCES Utilisateur(ID),
    FOREIGN KEY(NumCommande) REFERENCES Commande(NumCommande)
 );
