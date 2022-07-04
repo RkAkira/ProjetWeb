@@ -14,20 +14,23 @@ exports.getAllProduit = (req, res, next) => {
 }
 
 exports.createProduit = (req,res,next)=>{
-    photo = req.query.photo;
-    nom = req.query.nom;
-    prix = req.query.prix;
-    nbRestant = req.query.nbRestant;
-    dispo = req.query.disponible;
+    console.log("ok");
+    const photo = req.body.photo;
+    const nom = req.body.nom;
+    const prix = req.body.prix;
+    const nbRestant = req.body.nbRestant;
+    const dispo = true;
     if (photo && nom && prix && nbRestant && dispo) {
-        mysql.query('INSERT INTO Commande VALUES (?, ?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
+        console.log("bilal");
+        mysql.query('INSERT INTO Produit (photo, nom, prix, nbRestant, disponible) VALUES (? ,?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Produit créée !'
                 });
+                console.log('Produit créée !');
             }
             else {
-                res.status(500).json(err);
+                console.log(err);
             }
         });
     }
@@ -41,7 +44,7 @@ exports.createProduit = (req,res,next)=>{
 exports.getProduitByID = (req,res, next) => {
     id = req.query.id;
     if (id) {
-        mysql.query('SELECT * FROM Commande WHERE Id_Produit = ?', [id], (err, rows, fields) => {
+        mysql.query('SELECT * FROM Produit WHERE Id_Produit = ?', [id], (err, rows, fields) => {
             if (!err) {
                 res.status(200).json(rows);
                 console.log(rows);

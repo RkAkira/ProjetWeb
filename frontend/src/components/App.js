@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import './App.css';
 import Banner from './banner';
 import Tableau from './tableau';
-import Ajout from './add';
+import Ajout from './addProduct';
 import Modal from './modal';
 import Vente from './vente';
 import Dashboard from './dashboard';

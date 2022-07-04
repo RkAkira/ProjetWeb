@@ -3,22 +3,12 @@ import Axios from 'axios';
 
 function Tableau() {
 
-    const [bienListe, setBienListe] = useState([]);
+    const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/api/bien_immobilier/', {
+        Axios.get('http://localhost:3001/api/produit/', {
         }).then((response) => {
-            setBienListe(response.data);
-        });
-    }, []
-    )
-
-    const [personneListe, setPersonneListe] = useState([]);
-
-    useEffect(() => {
-        Axios.get('http://localhost:3001/api/personne/', {
-        }).then((response) => {
-            setPersonneListe(response.data);
+            setProductList(response.data);
         });
     }, []
     )
@@ -27,36 +17,27 @@ function Tableau() {
 
         <div class="bg-white">
             <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-                <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Customers also purchased</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Liste des produits</h2>
 
                 <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
 
-                    {bienListe.map((val, key) => {
-                        let nom = "", prenom = "";
-                        personneListe.map((personne, key) => {
-                            if (personne.id_personne === val.id_proprietaire) {
-                                nom = personne.nom;
-                                prenom = personne.prenom;
-                            }
-                            return nom, prenom;
-                        })
+                    {productList.map((val, key) => {
 
                         return (
                             < div class="group relative" >
                                 <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men&#039;s Basic Tee in black." class="w-full h-full object-center object-cover lg:w-full lg:h-full"></img>
+                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Image du produit" class="w-full h-full object-center object-cover lg:w-full lg:h-full"></img>
                                 </div>
                                 <div class="mt-4 flex justify-between">
                                     <div>
                                         <h3 class="text-sm text-gray-700">
-                                            <a href={'/voir/' + val.id_bien + '/' + val.id_proprietaire + '/' +  nom + '/' + prenom}>
+                                            <a href={'/voir/'}>
                                                 <span aria-hidden="true" class="absolute inset-0"></span>
-                                                {nom + " " + prenom}
                                             </a>
                                         </h3>
-                                        <p class="mt-1 text-sm text-gray-500">Black</p>
+                                        <p class="mt-1 text-sm text-gray-500">{val.nom}</p>
                                     </div>
-                                    <p class="text-sm font-medium text-gray-900">$35</p>
+                                    <p class="text-sm font-medium text-gray-900">{val.prix}</p>
                                 </div>
                             </div>
                         );
