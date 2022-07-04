@@ -20,7 +20,7 @@ exports.createProduit = (req,res,next)=>{
     nbRestant = req.query.nbRestant;
     dispo = req.query.disponible;
     if (photo && nom && prix && nbRestant && dispo) {
-        mysql.query('INSERT INTO Produit VALUES (?, ?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
+        mysql.query('INSERT INTO Produit (photo, nom, prix, nbRestant, disponible) VALUES (?, ?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Produit créée !'

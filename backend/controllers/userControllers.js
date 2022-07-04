@@ -19,7 +19,7 @@ exports.createUser = (req,res,next)=>{
     mail = req.query.mail;
     id_Client = req.query.id_client;
     if (username && password && mail && id_Client) {
-        mysql.query('INSERT INTO Utilisateur VALUES (?, ?, ?, ?)', [username, password, mail, id_Client], (err, result) => {
+        mysql.query('INSERT INTO Utilisateur(username, password, mail, Id_Client) VALUES (?, ?, ?, ?)', [username, password, mail, id_Client], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur créée !'

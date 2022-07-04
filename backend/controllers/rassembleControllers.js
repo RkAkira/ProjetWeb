@@ -17,7 +17,7 @@ exports.createRassemble = (req,res,next)=>{
     numCommande = req.query.numero;
     id = req.query.id;
     if (numCommande && id) {
-        mysql.query('INSERT INTO Rassemble VALUES (?, ?)', [numCommande, id], (err, result) => {
+        mysql.query('INSERT INTO Rassemble(NumCommande, Id_Produit) VALUES (?, ?)', [numCommande, id], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'rassemble créée !'

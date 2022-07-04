@@ -17,7 +17,7 @@ exports.createAdmin = (req,res,next)=>{
     name = req.query.name;
     password = req.query.password;
     if (name && password) {
-        mysql.query('INSERT INTO Administrateur VALUES (?, ?)', [name, password], (err, result) => {
+        mysql.query('INSERT INTO Administrateur (name, password) VALUES (?, ?)', [name, password], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Administrateur créée !'

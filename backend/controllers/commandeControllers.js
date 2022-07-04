@@ -19,7 +19,7 @@ exports.createCommande = (req,res,next)=>{
     prix_commande = req.query.prixCommande;
     valide = req.query.valide;
     if (date_commande && prix_commande && valide) {
-        mysql.query('INSERT INTO Commande VALUES (?, ?, ?)', [date_commande, prix_commande, valide], (err, result) => {
+        mysql.query('INSERT INTO Commande(dateCommande, prixCommande, valide) VALUES (?, ?, ?)', [date_commande, prix_commande, valide], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Commande créée !'
