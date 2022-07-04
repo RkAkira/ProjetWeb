@@ -70,7 +70,7 @@ exports.updateProduit = (req, res, next) => {
     const nbRestant = req.body.nbRestant;
     const dispo = req.body.dispo;
     if (id && photo && nom && prix && nbRestant) {
-        mysql.query('UPDATE Produit SET photo = ?, nom = ?, prix = ?, nbRestant = ?, dispo = ? WHERE Id_Produit = ?', [photo, nom, prix, nbRestant, dispo, id], (err, result) => {
+        mysql.query('UPDATE Produit SET photo = ?, nom = ?, prix = ?, nbRestant = ?, disponible = ? WHERE Id_Produit = ?', [photo, nom, prix, nbRestant, dispo, id], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Produit modifiée !'

@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState, useEffect } from 'react'
+import { Fragment, useRef, useState, useEffect, setState} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Axios from 'axios';
 import { XIcon } from '@heroicons/react/outline'
@@ -29,25 +29,29 @@ export default function Modal(props) {
     b.set(key, produit[0][key]);
   }
 
-  const [nom, setNom] = useState(() => {
-    return b.get('nom');
-  });
+  const [nom, setNom] = useState(b.get('nom'));
   const [prix, setPrix] = useState(b.get('prix'));
   const [nbRestant, setNbRestant] = useState(b.get('nbRestant'));
   const [photo, setPhoto] = useState(b.get('photo'));
   const [dispo, setDispo] = useState(b.get('disponible'));
 
-  console.log('restant = ' + nbRestant)
-
   const UpdateProduct = () => {
-    Axios.put('http://localhost:3001/api/produit/id', {
+    const prod = {
       id: props.id,
-      nom: nom,
-      prix: prix,
-      nbRestant: nbRestant,
-      photo: photo,
-      dispo: dispo
-    }).then(() => {
+      nom: "",
+      prix: "",
+      nbRestant: "",
+      photo: "",
+      dispo: ""
+    }
+
+    if (nom == null) {prod.nom = b.get('nom');} else {prod.nom = nom;}
+    if (prix == null) {prod.prix = b.get('prix');} else {prod.prix = prix;}
+    if (nbRestant == null) {prod.nbRestant = b.get('nbRestant');} else {prod.nbRestant = nbRestant;}
+    if (photo == null) {prod.photo = b.get('photo');} else {prod.photo = photo;}
+    if (dispo == null) {prod.dispo = b.get('dispo');} else {prod.dispo = dispo;}
+
+    Axios.put('http://localhost:3001/api/produit/id', prod).then(() => {
       console.log("produit modifié")
     });
   };
@@ -130,7 +134,7 @@ export default function Modal(props) {
                           <div class=" relative ">
                             <h3 className="text-lg text-gray-900 sm:pr-12">Nom du produit :</h3>
                             <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                               Value={b.get('nom')} onChange={(event) => { setNom(event.target.value); }} />
+                               defaultValue={b.get("nom")} key={b.get("nom")} onChange={(event) => { setNom(event.target.value); }} />
                           </div>
                         </div>
 
@@ -146,7 +150,7 @@ export default function Modal(props) {
                                   </svg>
                                 </div>
                                 <input type="number" min="0" name="price" class="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent pl-10  pb-3"
-                                   Value={b.get('prix')} onChange={(event) => { setPrix(event.target.value); }} />
+                                   defaultValue={b.get('prix')} onChange={(event) => { setPrix(event.target.value); }} />
                               </div>
                             </div>
                           </div>
@@ -158,7 +162,7 @@ export default function Modal(props) {
                           <h3 className="text-lg text-gray-900 sm:pr-12">Nombre restant :</h3>
                           <div class=" relative ">
                             <input type="number" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                              Value={b.get('nbRestant')} onChange={(event) => { setNbRestant(event.target.value); }} />
+                              defaultValue={b.get('nbRestant')} onChange={(event) => { setNbRestant(event.target.value); }} />
                           </div>
                         </div>
 
@@ -166,18 +170,18 @@ export default function Modal(props) {
                           <h3 className="text-lg text-gray-900 sm:pr-12">Photo :</h3>
                           <div class=" relative ">
                             <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                             Value={b.get('photo')} onChange={(event) => { setPhoto(event.target.value); }} />
+                             defaultValue={b.get('photo')} onChange={(event) => { setPhoto(event.target.value); }} />
                           </div>
                         </div>
                         <div class="flex flex-col mb-2 mt-2">
                           {b.get('disponible') ?
                             <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                               name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
-                              <option value="true" selected>Disponible</option> <option value="false" >Non Disponible</option>
+                              <option value="1" selected>Disponible</option> <option value="0" >Non Disponible</option>
                             </select>
                             : <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                               name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
-                              <option value="true">Disponible</option> <option value="false" selected>Non Disponible</option>
+                              <option value="1">Disponible</option> <option value="0" selected>Non Disponible</option>
                             </select>
                           }
 
