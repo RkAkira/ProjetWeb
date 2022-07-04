@@ -1,1 +1,3 @@
 node_modules
+backend\database\database.js
+backend\node_modules

@@ -14,11 +14,12 @@ exports.getAllClient = (req, res, next) => {
 }
 
 exports.createClient = (req, res, next)=>{
-    nom = req.query.nom;
-    prenom = req.query.prenom;
-    adresse = req.query.adresse;
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
+    const adresse = req.body.adresse;
+
     if (nom && prenom && adresse) {
-        mysql.query('INSERT INTO Client VALUES (?, ?, ?)', [nom, prenom, adresse], (err, result) => {
+        mysql.query('INSERT INTO Client (nom, prenom, adresse) VALUES (?, ?, ?)', [nom, prenom, adresse], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Client créée !'

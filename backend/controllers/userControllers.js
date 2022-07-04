@@ -14,12 +14,15 @@ exports.getAllUser = (req, res, next) => {
 }
 
 exports.createUser = (req,res,next)=>{
-    username = req.query.username;
-    password = req.query.password;
+
+    nom = req.query.nom;
+    username = req.query.prenom;
+    adresse = req.query.adresse;
     mail = req.query.mail;
-    id_Client = req.query.id_client;
-    if (username && password && mail && id_Client) {
-        mysql.query('INSERT INTO Utilisateur VALUES (?, ?, ?, ?)', [username, password, mail, id_Client], (err, result) => {
+    mdp = req.query.mdp;
+
+    if (nom && prenom && adresse && mail && mdp) {
+        mysql.query('INSERT INTO Utilisateur VALUES (?, ?, ?)', [username, password, mail], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur créée !'
