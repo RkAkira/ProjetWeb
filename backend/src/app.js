@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
 const commandeRoutes = require('../routes/commandeRoutes');
 const produitRoutes = require('../routes/produitRoutes');
 const clientRoutes = require('../routes/clientRoutes');
@@ -8,7 +10,9 @@ const userRoutes = require('../routes/userRoutes');
 const sysPaiementRoutes = require('../routes/sysPaiementRoutes');
 const rassembleRoutes = require('../routes/rassembleRoutes');
 const realiseRoutes = require('../routes/realiseRoutes');
+
 app.use(express.json());
+app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
