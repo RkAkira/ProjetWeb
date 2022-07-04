@@ -1,0 +1,49 @@
+CREATE DATABASE db_project;
+use db_project;
+DROP TABLE ADRESSE;
+drop table Personne;
+drop table Bien_immobilier;
+drop table Garage;
+drop table Transaction;
+drop table Visite;
+
+
+create table Personne(
+		id_personne int PRIMARY KEY NOT NULL auto_increment,
+		nom varchar(15),
+		prenom varchar(30)
+	);
+
+create table Bien_immobilier(id_bien int PRIMARY KEY NOT NULL auto_increment,
+							 disponibilite boolean,
+							 nb_piece int,
+							 superficie int,
+							 prix_vente int,
+							 date_disponibilite date,
+							 etat ENUM ('neuf', 'bon état', 'très bon état', 'mauvais état'),
+							 type_bien ENUM ('maison', 'appartement'),
+							 adresse varchar(300),
+							 id_proprietaire int,
+							 nb_garage int,
+							 foreign key(id_proprietaire) references Personne(id_personne) on delete cascade on update cascade
+);
+
+
+create table Transaction(commission int,
+						 date_transac date,
+						 id_client int,
+						 id_propriétaire int,
+						 id_bien int,
+						 constraint pk_transaction primary key(id_client,id_propriétaire, id_bien),
+						 foreign key(id_client) references Personne(id_personne) on delete cascade on update cascade,
+						 foreign key(id_propriétaire) references Personne(id_personne) on delete cascade on update cascade,
+						 foreign key(id_bien) references Bien_immobilier(id_bien) on delete cascade on update cascade,
+
+);
+create table Visite(date_visite date,
+					id_client int,
+					id_bien int,
+					constraint pk_visite primary key(id_client,id_bien),
+					foreign key(id_client) references Personne(id_personne) on delete cascade on update cascade,
+				    foreign key(id_bien) references Bien_immobilier(id_bien) on delete cascade on update cascade,
+				   );

@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
-const commandeRoutes = require('../routes/commandeRoutes');
-const produitRoutes = require('../routes/produitRoutes');
-const clientRoutes = require('../routes/clientRoutes');
-const adminRoutes = require('../routes/adminRoutes');
-const userRoutes = require('../routes/userRoutes');
-const sysPaiementRoutes = require('../routes/sysPaiementRoutes');
-const rassembleRoutes = require('../routes/rassembleRoutes');
-const realiseRoutes = require('../routes/realiseRoutes');
+const cors = require('cors');
+const bienImmobilierRoutes = require('../routes/bienImmobilierRoutes');
+const adresseRoutes = require('../routes/adresseRoutes');
+const garageRoutes = require('../routes/garageRoutes');
+const personneRoutes = require('../routes/personneRoutes');
+const transactionRoutes = require('../routes/transactionRoutes');
+const visiteRoutes = require('../routes/visiteRoutes');
+
 app.use(express.json());
+app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,13 +18,12 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/commande', commandeRoutes);
-app.use('/api/produit', produitRoutes);
-app.use('/api/client', clientRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/sysPaiement', sysPaiementRoutes);
-app.use('/api/rassemble', rassembleRoutes);
-app.use('/api/realise', realiseRoutes);
+app.use('/api/bien_immobilier', bienImmobilierRoutes);
+app.use('/api/adresse', adresseRoutes);
+app.use('/api/garage', garageRoutes);
+app.use('/api/personne', personneRoutes);
+app.use('/api/transaction', transactionRoutes);
+app.use('/api/visite', visiteRoutes);
+
 
 module.exports = app;
