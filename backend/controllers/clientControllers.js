@@ -18,7 +18,7 @@ exports.createClient = (req, res, next)=>{
     prenom = req.query.prenom;
     adresse = req.query.adresse;
     if (nom && prenom && adresse) {
-        mysql.query('INSERT INTO Client VALUES (?, ?, ?)', [nom, prenom, adresse], (err, result) => {
+        mysql.query('INSERT INTO Client(nom, prenom, adresse) VALUES (?, ?, ?)', [nom, prenom, adresse], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Client créée !'

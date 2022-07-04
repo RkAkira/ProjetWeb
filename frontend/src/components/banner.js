@@ -15,10 +15,9 @@ export default function Example(props) {
     var navigation = [
         { name: 'Tableau de bord', href: '/' },
         { name: 'Liste des produits', href: '/liste' },
-        { name: 'Ventes', href: '/vente' },
         { name: 'Ajouter un produit', href: '/add' },
-        { name: 'Ajouter un ', href: '/addPersonne' },
-        { name: 'Créer une visite', href: '/visite' },
+        { name: 'Liste Utilisateur', href: '/listeUser' },
+        { name: 'Ajouter un Utilisateur ', href: '/addPersonne' },
         { name: 'Connexion', href: '/connexion' }
     ]
     switch (props.name) {
@@ -26,19 +25,19 @@ export default function Example(props) {
             navigation[0] = { name: 'Tableau de bord', href: '/', current: true }
             break;
         case "liste":
-            navigation[1] = { name: 'Liste des biens', href: '/liste', current: true }
-            break;
-        case "vente":
-            navigation[2] = { name: 'Ventes', href: '/vente', current: true }
+            navigation[1] = { name: 'Liste des produits', href: '/liste', current: true }
             break;
         case "add":
-            navigation[3] = { name: 'Ajouter un bien', href: '/add', current: true }
+            navigation[2] = { name: 'Ajouter un produit', href: '/add', current: true }
             break;
-        case "addpersonne":
-            navigation[4] = { name: 'Ajouter une personne', href: '/addPersonne', current: true }
+        case "listeUser":
+            navigation[3] = { name: 'Liste Utilisateur', href: '/listeUser', current: true }
             break;
-        case "visite":
-            navigation[5] = { name: 'Créer une visite', href: '/visite', current: true }
+        case "addPersonne":
+            navigation[4] = { name: 'Ajouter un Utilisateur', href: '/addPersonne', current: true }
+            break;
+        case "connexion":
+            navigation[5] = { name: 'Connexion', href: '/connexion', current: true }
             break;
         default:
             break;

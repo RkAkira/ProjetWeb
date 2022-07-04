@@ -19,7 +19,7 @@ exports.createUser = (req,res,next)=>{
     mail = req.query.mail;
     id_Client = req.query.id_client;
     if (username && password && mail && id_Client) {
-        mysql.query('INSERT INTO Utilisateur VALUES (?, ?, ?, ?)', [username, password, mail, id_Client], (err, result) => {
+        mysql.query('INSERT INTO Utilisateur(username, password, mail, Id_Client) VALUES (?, ?, ?, ?)', [username, password, mail, id_Client], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur créée !'
@@ -86,7 +86,7 @@ exports.updateUserbyID = (req, res, next) => {
     mail = req.query.mail;
     id_client = req.query.id_client
     if (id && username && password && mail && id_client) {
-        mysql.query('UPDATE Utilisateur SET username = ?, password = ?, mail = ?, id_client= ? WHERE ID = ?', [username, password, mail, id_client, id], (err, result) => {
+        mysql.query('UPDATE Utilisateur SET username = ?, password = ?, mail = ?, Id_client= ? WHERE ID = ?', [username, password, mail, id_client, id], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur modifiée !'

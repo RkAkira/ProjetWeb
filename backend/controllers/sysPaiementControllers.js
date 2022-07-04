@@ -19,7 +19,7 @@ exports.createSysPaiement = (req,res,next)=>{
     nomTitulaireCarte = req.query.nom;
     id_client = req.query.id
     if (nom && numCarte && nomTitulaireCarte && id_client) {
-        mysql.query('INSERT INTO Systeme_paiement VALUES (?, ?, ?)', [nom, numCarte, nomTitulaireCarte, id_client], (err, result) => {
+        mysql.query('INSERT INTO Systeme_paiement(ID, NumCommande) VALUES (?, ?, ?)', [nom, numCarte, nomTitulaireCarte, id_client], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Système de Paiement créée !'

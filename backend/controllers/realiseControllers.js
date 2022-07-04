@@ -17,7 +17,7 @@ exports.createRealise = (req,res,next)=>{
     id = req.query.id;
     numCommande = req.query.numCommande;
     if (id && numCommande) {
-        mysql.query('INSERT INTO Realise VALUES (?, ?)', [id, numCommande], (err, result) => {
+        mysql.query('INSERT INTO Realise(ID, NumCommande) VALUES (?, ?)', [id, numCommande], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Realisation créée !'
