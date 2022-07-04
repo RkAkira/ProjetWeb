@@ -14,10 +14,10 @@ export default function Example(props) {
 
     var navigation = [
         { name: 'Tableau de bord', href: '/' },
-        { name: 'Liste des biens', href: '/liste' },
+        { name: 'Liste des produits', href: '/liste' },
         { name: 'Ventes', href: '/vente' },
-        { name: 'Ajouter un bien', href: '/add' },
-        { name: 'Ajouter un Personne', href: '/addPersonne' },
+        { name: 'Ajouter un produit', href: '/add' },
+        { name: 'Ajouter un ', href: '/addPersonne' },
         { name: 'Créer une visite', href: '/visite' },
         { name: 'Connexion', href: '/connexion' }
     ]
