@@ -32,7 +32,7 @@ CREATE TABLE Administrateur(
 );
 
 CREATE TABLE Utilisateur(
-   ID VARCHAR(50),
+   ID INT AUTO_INCREMENT,
    username VARCHAR(50),
    password VARCHAR(50),
    mail VARCHAR(50),
@@ -47,22 +47,22 @@ CREATE TABLE Systeme_paiement(
    nom VARCHAR(50),
    numCarte VARCHAR(50),
    nomTitulaireCarte VARCHAR(50),
-   ID VARCHAR(50) NOT NULL,
+   ID INT AUTO_INCREMENT,
    PRIMARY KEY(Id_Systeme_paiement),
    FOREIGN KEY(ID) REFERENCES Utilisateur(ID)
 );
 
 CREATE TABLE Rassemble(
-   NumCommande VARCHAR(50),
-   Id_Produit VARCHAR(50),
+   NumCommande INT,
+   Id_Produit INT,
    CONSTRAINT PK_rassemble PRIMARY KEY(NumCommande, Id_Produit),
    FOREIGN KEY(NumCommande) REFERENCES Commande(NumCommande),
    FOREIGN KEY(Id_Produit) REFERENCES Produit(Id_Produit)
 );
 
 CREATE TABLE Realise(
-   ID VARCHAR(50),
-   NumCommande VARCHAR(50),
+   ID INT,
+   NumCommande INT,
    CONSTRAINT PK_realise PRIMARY KEY(ID, NumCommande),
    FOREIGN KEY(ID) REFERENCES Utilisateur(ID),
    FOREIGN KEY(NumCommande) REFERENCES Commande(NumCommande)
