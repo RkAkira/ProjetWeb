@@ -81,7 +81,7 @@ exports.updateRassemble = (req, res, next) => {
 exports.deleteRassemble = (req, res, next) => {
     id = req.query.id;
     if (id) {
-        mysql.query('DELETE FROM Rassemble WHERE Pk_rassemble = ?', [id], (err, result) => {
+        mysql.query('DELETE FROM Rassemble WHERE PK_rassemble = ?', [id], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Ligne supprimée !'

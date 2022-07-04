@@ -20,7 +20,7 @@ exports.createProduit = (req,res,next)=>{
     nbRestant = req.query.nbRestant;
     dispo = req.query.disponible;
     if (photo && nom && prix && nbRestant && dispo) {
-        mysql.query('INSERT INTO Commande VALUES (?, ?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
+        mysql.query('INSERT INTO Produit VALUES (?, ?, ?, ?, ?)', [photo, nom, prix, nbRestant, dispo], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Produit créée !'
@@ -41,7 +41,7 @@ exports.createProduit = (req,res,next)=>{
 exports.getProduitByID = (req,res, next) => {
     id = req.query.id;
     if (id) {
-        mysql.query('SELECT * FROM Commande WHERE Id_Produit = ?', [id], (err, rows, fields) => {
+        mysql.query('SELECT * FROM Produit WHERE Id_Produit = ?', [id], (err, rows, fields) => {
             if (!err) {
                 res.status(200).json(rows);
                 console.log(rows);

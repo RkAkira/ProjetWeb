@@ -47,7 +47,7 @@ CREATE TABLE Systeme_paiement(
    nom VARCHAR(50),
    numCarte VARCHAR(50),
    nomTitulaireCarte VARCHAR(50),
-   ID VARCHAR(50) NOT NULL,
+   ID INT AUTO_INCREMENT,
    PRIMARY KEY(Id_Systeme_paiement),
    FOREIGN KEY(ID) REFERENCES Utilisateur(ID)
 );
