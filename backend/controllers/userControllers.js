@@ -1,7 +1,7 @@
 const mysql = require('../database/database');
 
 exports.getAllUser = (req, res, next) => {
-    mysql.query('SELECT * FROM User', (err, rows, fields)=>{
+    mysql.query('SELECT * FROM Utilisateur', (err, rows, fields)=>{
         if (!err) {
             res.status(200).json(rows);
             console.log(rows);
@@ -15,21 +15,24 @@ exports.getAllUser = (req, res, next) => {
 
 exports.createUser = (req,res,next)=>{
 
-    nom = req.query.nom;
-    username = req.query.prenom;
-    adresse = req.query.adresse;
-    mail = req.query.mail;
-    mdp = req.query.mdp;
+    nom = req.body.nom;
+    prenom = req.body.prenom;
+    adresse = req.body.adresse;
+    mail = req.body.mail;
+    mdp = req.body.mdp;
+    admin = req.body.admin;
     if (nom && prenom && adresse && mail && mdp) {
-        mysql.query('INSERT INTO Utilisateur VALUES (?, ?, ?)', [username, password, mail], (err, result) => {
+        mysql.query('INSERT INTO Utilisateur(nom,prenom,adresse,mail,password,admin) VALUES (?, ?, ?, ?, ?, ?)', [nom, prenom, adresse, mail, mdp, admin], (err, result) => {
 
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur créée !'
                 });
+                console.log('Utilisateur créée !');
             }
             else {
                 res.status(500).json(err);
+                console.log(err);
             }
         });
     }
@@ -37,6 +40,7 @@ exports.createUser = (req,res,next)=>{
         res.status(500).json({
             message: 'Veuillez remplir tous les champs !'
         });
+        console.log('Veuillez remplir tous les champs !');
     }
 }
 
@@ -83,20 +87,27 @@ exports.getUserById_client = (req,res, next) => {
 }
 
 exports.updateUserbyID = (req, res, next) => {
-    id = req.query.id;
-    username = req.query.username;
-    password = req.query.password;
-    mail = req.query.mail;
-    id_client = req.query.id_client
-    if (id && username && password && mail && id_client) {
-        mysql.query('UPDATE Utilisateur SET username = ?, password = ?, mail = ?, Id_client= ? WHERE ID = ?', [username, password, mail, id_client, id], (err, result) => {
+    id = req.body.id;
+    nom = req.body.nom;
+    prenom = req.body.prenom;
+    adresse = req.body.adresse;
+    mail = req.body.mail;
+    mdp = req.body.password;
+    admin = req.body.admin;
+
+    console.log(req.body);
+
+    if (true) {
+        mysql.query('UPDATE Utilisateur SET nom = ?, prenom = ?, adresse = ?, mail = ?, password = ?, admin = ? WHERE ID = ?', [nom, prenom, adresse, mail, mdp, admin, id], (err, result) => {
             if (!err) {
                 res.status(200).json({
                     message: 'Utilisateur modifiée !'
                 });
+                console.log('Utilisateur modifiée !');
             }
             else {
                 res.status(500).json(err);
+                console.log(err);
             }
         });
     }
@@ -104,6 +115,7 @@ exports.updateUserbyID = (req, res, next) => {
         res.status(500).json({
             message: 'Veuillez remplir tous les champs !'
         });
+        console.log( 'Veuillez remplir tous les champs !');
     }
 }
 

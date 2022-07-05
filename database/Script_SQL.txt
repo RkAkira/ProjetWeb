@@ -1,7 +1,7 @@
 CREATE TABLE Commande(
    NumCommande INT AUTO_INCREMENT,
    dateCommande DATE,
-   prixCommande DECIMAL(19,4),
+   prixCommande DECIMAL(19,2),
    valide_ BOOLEAN,
    PRIMARY KEY(NumCommande)
 );
@@ -10,36 +10,21 @@ CREATE TABLE Produit(
    Id_Produit INT AUTO_INCREMENT,
    photo VARCHAR(500),
    nom VARCHAR(50),
-   prix DECIMAL(19,4),
+   prix DECIMAL(19,2),
    nbRestant DOUBLE,
    disponible BOOLEAN,
    PRIMARY KEY(Id_Produit)
 );
 
-CREATE TABLE Client(
-   Id_Client INT AUTO_INCREMENT,
+CREATE TABLE Utilisateur(
+   ID INT AUTO_INCREMENT,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    adresse VARCHAR(50),
-   PRIMARY KEY(Id_Client)
-);
-
-CREATE TABLE Administrateur(
-   Id_Administrateur INT AUTO_INCREMENT,
-   name VARCHAR(50),
-   password VARCHAR(50),
-   PRIMARY KEY(Id_Administrateur)
-);
-
-CREATE TABLE Utilisateur(
-   ID INT AUTO_INCREMENT,
-   username VARCHAR(50),
    password VARCHAR(50),
    mail VARCHAR(50),
-   Id_Client INT NOT NULL,
-   PRIMARY KEY(ID),
-   UNIQUE(Id_Client),
-   FOREIGN KEY(Id_Client) REFERENCES Client(Id_Client)
+   admin BOOLEAN,
+   PRIMARY KEY(ID)
 );
 
 CREATE TABLE Systeme_paiement(
@@ -47,7 +32,7 @@ CREATE TABLE Systeme_paiement(
    nom VARCHAR(50),
    numCarte VARCHAR(50),
    nomTitulaireCarte VARCHAR(50),
-   ID INT AUTO_INCREMENT,
+   ID INT,
    PRIMARY KEY(Id_Systeme_paiement),
    FOREIGN KEY(ID) REFERENCES Utilisateur(ID)
 );
