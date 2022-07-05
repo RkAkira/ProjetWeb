@@ -31,7 +31,7 @@ function Tableau() {
                                 <div class="mt-4 flex justify-between">
                                     <div>
                                         <h3 class="text-sm text-gray-700">
-                                            <a href={'/voir/'}>
+                                            <a href={'/voir/' + val.Id_Produit}>
                                                 <span aria-hidden="true" class="absolute inset-0"></span>
                                             </a>
                                         </h3>

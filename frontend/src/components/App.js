@@ -22,7 +22,7 @@ function App() {
               <Route path="/liste" element={<Liste />} />
               <Route path="/add" element={<Add />} />
               <Route path="/vente" element={<Ventes />} />
-              <Route path="/voir/:id/:idprop/:nom/:prenom" element={<Voir />} />
+              <Route path="/voir/:id" element={<Voir />} />
               <Route path="/voirVentes/:id/:idprop/:nom/:prenom" element={<VoirVente />} />
               <Route path="/addPersonne" element={<PersonneAdd />} />
               <Route path="/visite" element={<CreerVisite />} />
@@ -75,7 +75,7 @@ const Voir = () => {
     <div>
       <Banner name="liste"></Banner>
       <Tableau></Tableau>
-      <Modal id={params.id} idprop={params.idprop} nom={params.nom} prenom={params.prenom}/>
+      <Modal id={params.id} />
     </div>
   );
 };
