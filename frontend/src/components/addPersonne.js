@@ -7,6 +7,7 @@ function AddPersonne() {
     const[adresse, setAdresse] = useState("");
     const[mail, setMail] = useState("");
     const[mdp, setMdp] = useState("");
+    const[admin, setAdmin] = useState(0);
 
     const addUtilisateur = () => {
         Axios.post('http://localhost:3001/api/user/', {
@@ -14,7 +15,8 @@ function AddPersonne() {
                 nom: nom, 
                 mail: mail,
                 mdp: mdp,
-                adresse: adresse
+                adresse: adresse,
+                admin: admin
         }).then(() => {
             console.log("success create personne");
         });
@@ -36,7 +38,7 @@ function AddPersonne() {
                         </div>
                         <div class="flex flex-col mb-2">
                             <div class=" relative ">
-                                <input type="text" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" 
+                                <input type="password" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" 
                                 name="Mot de passe" placeholder="Mot de passe" onChange={(event) => {setMdp(event.target.value);}}/>
                             </div>
                         </div>
@@ -54,6 +56,16 @@ function AddPersonne() {
                             <div class=" relative ">
                                 <input type="text" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" 
                                 name="Adresse" placeholder="Adresse postale" onChange={(event) => {setAdresse(event.target.value);}} />
+                            </div>
+                        </div>
+                        <div class="flex flex-col mb-2">
+                            <div class=" relative ">
+                            <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                              name="proprio" onChange={(event) => { setAdmin(event.target.value); }}>
+                                <option disabled >Type</option> 
+                              <option value="1">Administrateur</option> 
+                              <option value="0">Client</option>
+                            </select>
                             </div>
                         </div>
                         <div class="flex w-full my-4">
