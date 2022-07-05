@@ -4,10 +4,12 @@ import Banner from './banner';
 import Tableau from './tableau';
 import Ajout from './addProduct';
 import Modal from './modal';
-import Vente from './vente';
+import Vente from './listeUtilisateur';
 import Dashboard from './dashboard';
 import AjoutPersonne from './addPersonne';
 import Visite from './visite';
+import User from './voirUser';
+
 
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 
@@ -21,9 +23,9 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/liste" element={<Liste />} />
               <Route path="/add" element={<Add />} />
-              <Route path="/vente" element={<Ventes />} />
+              <Route path="/listeuser" element={<Ventes />} />
               <Route path="/voir/:id" element={<Voir />} />
-              <Route path="/voirVentes/:id/:idprop/:nom/:prenom" element={<VoirVente />} />
+              <Route path="/voirUser/:id" element={<VoirUser />} />
               <Route path="/addPersonne" element={<PersonneAdd />} />
               <Route path="/visite" element={<CreerVisite />} />
 
@@ -80,13 +82,13 @@ const Voir = () => {
   );
 };
 
-const VoirVente = () => {
+const VoirUser = () => {
   let params = useParams();
   return (
     <div>
       <Banner name="vente"></Banner>
       <Vente></Vente>
-      <Modal id={params.id} idprop={params.idprop} nom={params.nom} prenom={params.prenom}/>
+      <User id={params.id}/>
     </div>
   );
 };

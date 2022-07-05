@@ -19,7 +19,6 @@ function AddBien() {
     const [photo, setPhoto] = useState("");
 
     const addProduct = () => {
-        console.log("KARIM");
         Axios.post('http://localhost:3001/api/produit/', {
             nom: nom,
             prix: prix,
