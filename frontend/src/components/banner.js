@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, PlusIcon, XIcon } from '@heroicons/react/outline'
 import { Link } from 'react-router-dom'
@@ -13,35 +13,53 @@ function classNames(...classes) {
 export default function Example(props) {
 
     var navigation = [
-        { name: 'Tableau de bord', href: '/' },
-        { name: 'Liste des produits', href: '/liste' },
-        { name: 'Ajouter un produit', href: '/add' },
-        { name: 'Liste Utilisateur', href: '/listeUser' },
-        { name: 'Ajouter un Utilisateur ', href: '/addPersonne' },
-        { name: 'Connexion', href: '/connexion' }
+        { name: 'Liste des produits', href: '/liste' }
     ]
-    switch (props.name) {
-        case "home":
-            navigation[0] = { name: 'Tableau de bord', href: '/', current: true }
-            break;
-        case "liste":
-            navigation[1] = { name: 'Liste des produits', href: '/liste', current: true }
-            break;
-        case "add":
-            navigation[2] = { name: 'Ajouter un produit', href: '/add', current: true }
-            break;
-        case "listeUser":
-            navigation[3] = { name: 'Liste Utilisateur', href: '/listeUser', current: true }
-            break;
-        case "addPersonne":
-            navigation[4] = { name: 'Ajouter un Utilisateur', href: '/addPersonne', current: true }
-            break;
-        case "connexion":
-            navigation[5] = { name: 'Connexion', href: '/connexion', current: true }
-            break;
-        default:
-            break;
+
+    if (localStorage.getItem('user') != null) {
+
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user.admin) {
+            navigation.push({ name: 'Tableau de bord', href: '/' });
+            navigation.push({ name: 'Ajouter un produit', href: '/add' });
+            navigation.push({ name: 'Liste Utilisateur', href: '/listeUser' });
+            navigation.push({ name: 'Ajouter un Utilisateur ', href: '/addPersonne' });
+            navigation.push({ name: 'Deconnexion', href: '/deconnexion' });
+            var info = <a
+                className={classNames(
+                    'text-red-500 hover:bg-gray-700 hover:text-white',
+                    'px-3 py-2 rounded-md text-sm font-medium'
+                )}
+                disabled
+            >
+                {"Admin : " + user.nom + " " + user.prenom}
+            </a>
+
+        }
+        else{
+            navigation.push({ name: 'Panier', href: '/panier' });
+            navigation.push({ name: 'Deconnexion', href: '/deconnexion' });
+            var info = <a
+                className={classNames(
+                    'text-red-500 hover:bg-gray-700 hover:text-white',
+                    'px-3 py-2 rounded-md text-sm font-medium'
+                )}
+                disabled
+            >
+                {"Client : " + user.nom + " " + user.prenom}
+            </a>
+        }
+        
     }
+    else {
+        navigation.push({ name: 'Connexion', href: '/connexion' });
+    }
+
+
+
+
+
+
 
 
     return (
@@ -89,6 +107,7 @@ export default function Example(props) {
                                                 {item.name}
                                             </a>
                                         ))}
+                                        {info}
                                     </div>
                                 </div>
                             </div>

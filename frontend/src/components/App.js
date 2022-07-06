@@ -9,7 +9,9 @@ import Dashboard from './dashboard';
 import AjoutPersonne from './addPersonne';
 import Visite from './visite';
 import User from './voirUser';
-
+import Conn from './connexion';
+import Deco from './deconnexion';
+import Panier from './panier';
 
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 
@@ -28,6 +30,9 @@ function App() {
               <Route path="/voirUser/:id" element={<VoirUser />} />
               <Route path="/addPersonne" element={<PersonneAdd />} />
               <Route path="/visite" element={<CreerVisite />} />
+              <Route path="/connexion" element={<Connexion />} />
+              <Route path="/deconnexion" element={<Deconnexion />} />
+              <Route path="/panier" element={<Cart />} />
 
             </Routes>
           </div>
@@ -42,6 +47,15 @@ function App() {
   );
 
 }
+
+const Connexion = () => {
+  return (
+    <div>
+      <Banner name="home"></Banner>
+      <Conn/>
+    </div>
+  );
+};
 
 const Home = () => {
   return (
@@ -116,6 +130,24 @@ const CreerVisite = () => {
     <div>
       <Banner name="visite"></Banner>
       <Visite/>
+    </div>
+  );
+};
+
+const Deconnexion = () => {
+  return (
+    <div>
+      <Deco/>
+    </div>
+  );
+};
+
+const Cart = () => {
+  return (
+    <div>
+      <Banner name="liste"></Banner>
+      <Tableau></Tableau>
+      <Panier></Panier>
     </div>
   );
 };
