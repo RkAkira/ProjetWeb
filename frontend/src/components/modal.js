@@ -176,7 +176,7 @@ export default function Modal(props) {
                                 defaultValue={b.get('nbRestant')} disabled onChange={(event) => { setNbRestant(event.target.value); }} />}
                           </div>
                         </div>
-
+                        {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
                         <div class="flex flex-col mb-2 mt-2">
                           <h3 className="text-lg text-gray-900 sm:pr-12">Photo :</h3>
                           <div class=" relative ">
@@ -186,7 +186,8 @@ export default function Modal(props) {
                               <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                 defaultValue={b.get('photo')} disabled onChange={(event) => { setPhoto(event.target.value); }} />}
                           </div>
-                        </div>
+                        </div>: <div></div>
+                        }
                         {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
                           <div class="flex flex-col mb-2 mt-2">
                             {b.get('disponible') ?
