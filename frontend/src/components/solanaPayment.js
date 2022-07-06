@@ -73,11 +73,14 @@ const signAndSendTransaction = async (transaction) =>{
     }
 }
 
-const solanaPayment = async (amountOfSol) => {
+export const solanaPayment = async (amountInEuros) => {
     try {
+      console.log("Amount in euros", amountInEuros);
       const provider = getProvider();
       console.log(provider);
       await connecting();
+      const amountOfSol = amountInEuros / 40;
+      //40 is the average value of Sol in Euros 
       const transaction = await createTransaction(amountOfSol, getProvider());
       paymentSuccess = await signAndSendTransaction(transaction);
       if(paymentSuccess){
