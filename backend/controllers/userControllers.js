@@ -65,6 +65,31 @@ exports.getUserByID = (req,res, next) => {
     }
 }
 
+exports.getUserByEmail = (req,res) => {
+    email = req.query.mail;
+    password = req.query.password;
+    console.log(req.query);
+    if (email && password) {
+        mysql.query('SELECT * FROM Utilisateur WHERE mail = ? AND password = ?', [email, password], (err, result) => {
+            if (!err) {
+                if(result.length > 0){
+                    console.log("result = " + result);
+                    res.send(result);
+                }
+                else
+                    res.send({message : "Email ou mot de passe incorrect"})
+            }
+            else {
+                res.status(500).json(err);
+                console.log(err);
+            }
+        });
+    }
+    else {
+        res.send({message : "Veuillez remplir tous les champs"})
+    }
+}
+
 exports.getUserById_client = (req,res, next) => {
     id = req.query.id;
     if (id) {
