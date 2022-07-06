@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Axios from 'axios';
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
 
 
 function Connect() {
-    const navigate = useNavigate();
+    let navigate = useNavigate();
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
@@ -27,6 +27,7 @@ function Connect() {
                     localStorage.setItem('user', JSON.stringify(x));
                     localStorage.setItem("cart", JSON.stringify({"liste" : []}));
                     console.log(localStorage);
+                    navigate("/liste");
                 }
             });
         }
