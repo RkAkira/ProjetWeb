@@ -2,9 +2,12 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+
 import {solanaPayment} from './solanaPayment'
+import { useNavigate } from "react-router-dom"
 
 export default function Example() {
+    let navigate = useNavigate();
 
     var listeProduit = [];
     var ids = [];
@@ -14,7 +17,7 @@ export default function Example() {
     contenu.forEach(element => {
         ids.push(element.id)
         listeProduit.push(element);
-        total += parseInt(element.prix,10);
+        total += parseInt(element.prix, 10);
     });
 
     const counts = {};
@@ -29,6 +32,14 @@ export default function Example() {
     var uniqueSet = new Set(jsonObject);
     var uniqueArray = Array.from(uniqueSet).map(JSON.parse);
 
+    const Retirer = (id) => {
+        var newListe = contenu.filter(data => data.id != id);
+        for (let i = 0; i < counts[id] - 1; ++i) {
+            newListe.push(contenu.filter(data => data.id == id)[0])
+        }
+        localStorage.setItem("cart", JSON.stringify({ "liste": newListe }));
+        navigate("/panier");
+    }
 
     console.log(uniqueArray);
 
@@ -107,8 +118,10 @@ export default function Example() {
 
                                                                         <div className="flex">
                                                                             <button
+                                                                                href="/panier"
                                                                                 type="button"
                                                                                 className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                                                onClick={() => Retirer(product.id)}
                                                                             >
                                                                                 retirer
                                                                             </button>

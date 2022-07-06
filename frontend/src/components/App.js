@@ -6,7 +6,7 @@ import Ajout from './addProduct';
 import Modal from './modal';
 import Vente from './listeUtilisateur';
 import Dashboard from './dashboard';
-import AjoutPersonne from './addPersonne';
+import AjoutPersonne from './addUser';
 import Visite from './visite';
 import User from './voirUser';
 import Conn from './connexion';

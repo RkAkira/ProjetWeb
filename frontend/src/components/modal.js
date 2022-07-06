@@ -123,7 +123,7 @@ export default function Modal(props) {
                     <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
 
                       <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
-                        <img src={product.imageSrc} alt="Image du produit" className="object-center object-cover" />
+                        <img src={b.get("photo")} alt="Image du produit" className="object-center object-cover" />
                       </div>
                       <div className="sm:col-span-8 lg:col-span-7">
                         <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">Informations du produit</h2>
@@ -176,7 +176,7 @@ export default function Modal(props) {
                                 defaultValue={b.get('nbRestant')} disabled onChange={(event) => { setNbRestant(event.target.value); }} />}
                           </div>
                         </div>
-
+                        {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
                         <div class="flex flex-col mb-2 mt-2">
                           <h3 className="text-lg text-gray-900 sm:pr-12">Photo :</h3>
                           <div class=" relative ">
@@ -186,7 +186,8 @@ export default function Modal(props) {
                               <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                 defaultValue={b.get('photo')} disabled onChange={(event) => { setPhoto(event.target.value); }} />}
                           </div>
-                        </div>
+                        </div>: <div></div>
+                        }
                         {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
                           <div class="flex flex-col mb-2 mt-2">
                             {b.get('disponible') ?

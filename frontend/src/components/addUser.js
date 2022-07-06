@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Axios from 'axios';
 
-function AddPersonne() {
+function AddUser() {
     const[nom, setNom] = useState("");
     const[prenom, setPrenom] = useState("");
     const[adresse, setAdresse] = useState("");
@@ -85,4 +85,4 @@ function AddPersonne() {
 
 }
 
-export default AddPersonne;
+export default AddUser;
