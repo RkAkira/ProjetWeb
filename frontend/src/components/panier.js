@@ -2,6 +2,8 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+
+import {solanaPayment} from './solanaPayment'
 import { useNavigate } from "react-router-dom"
 
 export default function Example() {
@@ -139,13 +141,16 @@ export default function Example() {
                                                 <p>{total} €</p>
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Livraison et taxes calculé au paiement.</p>
-                                            <div className="mt-6">
-                                                <a
-                                                    href="#"
-                                                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                                                >
-                                                    Payer
-                                                </a>
+                                            <div className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                                                
+                                                <button
+                                                    type="button"
+                                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                    onClick={() => solanaPayment(total)}
+                                                    >
+                                                    Payer<span aria-hidden="true"> &rarr;</span>
+                                                </button>
+                                                
                                             </div>
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>
