@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState, useEffect, setState} from 'react'
+import { Fragment, useRef, useState, useEffect, setState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Axios from 'axios';
 import { XIcon } from '@heroicons/react/outline'
@@ -23,7 +23,6 @@ export default function Modal(props) {
   }, []
   )
 
-
   var b = new Map();
   for (var key in produit[0]) {
     b.set(key, produit[0][key]);
@@ -34,6 +33,15 @@ export default function Modal(props) {
   const [nbRestant, setNbRestant] = useState(b.get('nbRestant'));
   const [photo, setPhoto] = useState(b.get('photo'));
   const [dispo, setDispo] = useState(b.get('disponible'));
+  
+  const product = {
+      id: props.id,
+      nom: b.get('nom'),
+      prix: b.get('prix'),
+      nbRestant: b.get('nbRestant'),
+      photo: b.get('photo'),
+      dispo: b.get('disponible')
+  }
 
   const UpdateProduct = () => {
     const prod = {
@@ -45,46 +53,35 @@ export default function Modal(props) {
       dispo: ""
     }
 
-    if (nom == null) {prod.nom = b.get('nom');} else {prod.nom = nom;}
-    if (prix == null) {prod.prix = b.get('prix');} else {prod.prix = prix;}
-    if (nbRestant == null) {prod.nbRestant = b.get('nbRestant');} else {prod.nbRestant = nbRestant;}
-    if (photo == null) {prod.photo = b.get('photo');} else {prod.photo = photo;}
-    if (dispo == null) {prod.dispo = b.get('dispo');} else {prod.dispo = dispo;}
+    if (nom == null) { prod.nom = b.get('nom'); } else { prod.nom = nom; }
+    if (prix == null) { prod.prix = b.get('prix'); } else { prod.prix = prix; }
+    if (nbRestant == null) { prod.nbRestant = b.get('nbRestant'); } else { prod.nbRestant = nbRestant; }
+    if (photo == null) { prod.photo = b.get('photo'); } else { prod.photo = photo; }
+    if (dispo == null) { prod.dispo = b.get('dispo'); } else { prod.dispo = dispo; }
 
     Axios.put('http://localhost:3001/api/produit/id', prod).then(() => {
       console.log("produit modifié")
     });
   };
 
-  // const changeDispo = () => {
-  //   console.log("ok");
-  //   Axios.put('http://localhost:3001/api/bien_immobilier/id', {
-  //     id: bi,
-  //     dispo: Dispo
-  //   }).then(() => {
-  //     console.log("success vente réalisée");
-
-  //   });
-  // };
-
+  const AddToCart = () => {
+    var liste = [];
+    var contenu = JSON.parse(localStorage.getItem('cart')).liste;
+    if (contenu.length == 0) {
+      liste.push(product);
+    }
+    else {
+      liste = contenu;
+      liste.push(product);
+    }
+    localStorage.setItem('cart', JSON.stringify({ "liste": liste }));
+  };
 
   const [open, setOpen] = useState(true)
   const cancelButtonRef = useRef(null)
   let button;
 
   const [openModalV, setOpenModalV] = useState(false);
-
-  //check isVendu affichage du boutton vendre
-  // if (b.get('disponibilite')) {
-  //   button = <button
-  //     type="button"
-  //     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-  //     onClick={() => setOpenModalV(true)}
-  //     ref={cancelButtonRef}
-  //   >
-  //     Vendre
-  //   </button>
-  // }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -133,8 +130,12 @@ export default function Modal(props) {
                         <div class="flex flex-col mb-2 mt-2">
                           <div class=" relative ">
                             <h3 className="text-lg text-gray-900 sm:pr-12">Nom du produit :</h3>
-                            <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                               defaultValue={b.get("nom")} key={b.get("nom")} onChange={(event) => { setNom(event.target.value); }} />
+                            {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
+                              <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get("nom")} onChange={(event) => { setNom(event.target.value); }} /> :
+                              <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get("nom")} disabled onChange={(event) => { setNom(event.target.value); }} />
+                            }
                           </div>
                         </div>
 
@@ -142,17 +143,24 @@ export default function Modal(props) {
                           <div class=" relative ">
                             <h3 className="text-lg text-gray-900 sm:pr-12">Prix du produit :</h3>
                             <div>
-                              <div class="relative">
 
+
+                              <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z" clip-rule="evenodd" />
                                   </svg>
                                 </div>
-                                <input type="number" min="0" name="price" class="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent pl-10  pb-3"
-                                   defaultValue={b.get('prix')} onChange={(event) => { setPrix(event.target.value); }} />
+                                {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
+                                  <input type="number" min="0" name="price" class="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent pl-10  pb-3"
+                                    defaultValue={b.get('prix')} onChange={(event) => { setPrix(event.target.value); }} /> :
+                                  <input type="number" min="0" name="price" class="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent pl-10  pb-3"
+                                    defaultValue={b.get('prix')} disabled onChange={(event) => { setPrix(event.target.value); }} />
+                                }
                               </div>
+
                             </div>
+
                           </div>
                         </div>
 
@@ -161,43 +169,62 @@ export default function Modal(props) {
                         <div class="flex flex-col mb-2 mt-2">
                           <h3 className="text-lg text-gray-900 sm:pr-12">Nombre restant :</h3>
                           <div class=" relative ">
-                            <input type="number" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                              defaultValue={b.get('nbRestant')} onChange={(event) => { setNbRestant(event.target.value); }} />
+                            {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
+                              <input type="number" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get('nbRestant')} onChange={(event) => { setNbRestant(event.target.value); }} /> :
+                              <input type="number" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get('nbRestant')} disabled onChange={(event) => { setNbRestant(event.target.value); }} />}
                           </div>
                         </div>
 
                         <div class="flex flex-col mb-2 mt-2">
                           <h3 className="text-lg text-gray-900 sm:pr-12">Photo :</h3>
                           <div class=" relative ">
-                            <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                             defaultValue={b.get('photo')} onChange={(event) => { setPhoto(event.target.value); }} />
+                            {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
+                              <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get('photo')} onChange={(event) => { setPhoto(event.target.value); }} /> :
+                              <input type="text" id="create-account-pseudo" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                defaultValue={b.get('photo')} disabled onChange={(event) => { setPhoto(event.target.value); }} />}
                           </div>
                         </div>
-                        <div class="flex flex-col mb-2 mt-2">
-                          {b.get('disponible') ?
-                            <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                              name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
-                              <option value="1" selected>Disponible</option> <option value="0" >Non Disponible</option>
-                            </select>
-                            : <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                              name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
-                              <option value="1">Disponible</option> <option value="0" selected>Non Disponible</option>
-                            </select>
-                          }
-
-
-                        </div>
+                        {(JSON.parse(localStorage.getItem('user')).admin && localStorage != null) ?
+                          <div class="flex flex-col mb-2 mt-2">
+                            {b.get('disponible') ?
+                              <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
+                                <option value="1" selected>Disponible</option> <option value="0" >Non Disponible</option>
+                              </select>
+                              : <select class="rounded-lg border-transparent flex-2 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                name="proprio" onChange={(event) => { setDispo(event.target.value); }}>
+                                <option value="1">Disponible</option> <option value="0" selected>Non Disponible</option>
+                              </select>
+                            }
+                          </div> : <div></div>
+                        }
 
 
                         <section aria-labelledby="options-heading" className="mt-10">
 
-                          <button
-                            type="submit"
-                            className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            onClick={UpdateProduct}
-                          >
-                            Modifier
-                          </button>
+                          {JSON.parse(localStorage.getItem('user')).admin ?
+                            <button
+                              type="submit"
+                              className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              onClick={UpdateProduct}
+                            >
+                              Modifier
+                            </button> :
+                            <button
+                              type="submit"
+                              className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              onClick={AddToCart}
+                            >
+                              Ajouter au panier
+                            </button>
+                          }
+
+
+
+
                         </section>
                       </div>
                     </div>

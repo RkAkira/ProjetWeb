@@ -3,16 +3,6 @@ import Axios from 'axios';
 
 function AddBien() {
 
-    // const [personneListe, setPersonneListe] = useState([]);
-
-    // useEffect(() =>{
-    //     Axios.get('http://localhost:3001/api/personne/', {
-    //     }).then((response) => {
-    //         setPersonneListe(response.data);
-    //     });
-    // },[]
-    // )
-
     const [nom, setNom] = useState("");
     const [prix, setPrix] = useState(0);
     const [nbRestant, setNbRestant] = useState(0);
