@@ -8,7 +8,7 @@ CREATE TABLE Commande(
 
 CREATE TABLE Produit(
    Id_Produit INT AUTO_INCREMENT,
-   photo VARCHAR(500),
+   photo VARCHAR(13000),
    nom VARCHAR(50),
    prix DECIMAL(19,2),
    nbRestant DOUBLE,
