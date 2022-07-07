@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline'
 
 import {solanaPayment} from './solanaPayment'
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Example() {
     let navigate = useNavigate();
@@ -145,9 +146,10 @@ export default function Example() {
                                                 
                                                 <button
                                                     type="button"
-                                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                    className="font-medium text-white"
                                                     onClick={() => solanaPayment(total)}
                                                     >
+                                                                    <ToastContainer />
                                                     Payer<span aria-hidden="true"> &rarr;</span>
                                                 </button>
                                                 
@@ -172,6 +174,8 @@ export default function Example() {
                     </div>
                 </div>
             </Dialog>
+
         </Transition.Root>
+        
     )
 }

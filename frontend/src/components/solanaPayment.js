@@ -1,5 +1,7 @@
 import {Connection, PublicKey, LAMPORTS_PER_SOL, SystemProgram, Transaction}from "@solana/web3.js";
 import { Buffer } from 'buffer';
+import {toast } from 'react-toastify';
+
 window.Buffer = Buffer;
 const network = "https://api.devnet.solana.com";
 const connection = new Connection(network, "confirmed");
@@ -85,9 +87,27 @@ export const solanaPayment = async (amountInEuros) => {
       paymentSuccess = await signAndSendTransaction(transaction);
       if(paymentSuccess){
         console.log("Payment was successful");
+        return toast.success('Paiement réussi !', {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          });
       }
       else {
         console.log("Payment was not successful");
+        return toast.error('Erreur lors de la transaction !', {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          });
       }
     }
     catch (err){
